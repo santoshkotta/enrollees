@@ -14,6 +14,7 @@ import { DailogComponent } from './dailog.component';
 })
 export class AppComponent implements OnInit {
   dataSource: any;
+  EnrolleesData: any;
   displayedColumns = ['id', 'name', 'dateOfBirth', 'active', 'action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -26,9 +27,14 @@ export class AppComponent implements OnInit {
 
   fetchEnrollees(): void {
     this.service.getEnrollees().subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource<Enrollee>(data);
-      this.dataSource.paginator = this.paginator;
+      this.EnrolleesData = data;
+      this.loadTable(this.EnrolleesData);
   });
+  }
+
+  loadTable(data: any): void {
+    this.dataSource = new MatTableDataSource<Enrollee>(this.EnrolleesData);
+    this.dataSource.paginator = this.paginator;
   }
 
   editEnrollee(user: any): void {
@@ -41,7 +47,9 @@ export class AppComponent implements OnInit {
       if(result){
       this.service.updateEnrollee(result).subscribe((data: any) => {
       if(data) {
-        this.fetchEnrollees();
+        const id = this.EnrolleesData.findIndex((item: any) => item.id === data.id);
+        this.EnrolleesData[id] = data;
+        this.loadTable(this.EnrolleesData);
       }
       });
       }
