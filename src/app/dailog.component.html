@@ -1,0 +1,31 @@
+<h2 class="dailog-style">Edit Enrollee</h2>
+<div mat-dialog-content>
+  <div class="dailog-style">
+    <mat-label>Id: </mat-label>
+    <mat-label>{{data.id}}</mat-label>
+  </div>
+  <div class="dailog-style">
+    <mat-form-field>
+      <mat-label>Name: </mat-label>
+      <input matInput
+        [(ngModel)]="data.name">
+    </mat-form-field>
+  </div>
+  <div class="dailog-style">
+    <mat-label>DOB: </mat-label>
+    <mat-label>{{data.dateOfBirth}}</mat-label>
+  </div>
+  <div class="dailog-style">
+    <mat-label>Active: </mat-label>
+    <mat-slide-toggle class="example-margin"
+      [(ngModel)]="data.active">
+    </mat-slide-toggle>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button
+    (click)="cancel()">Cancel</button>
+  <button mat-button
+    [mat-dialog-close]="data"
+    cdkFocusInitial>Update</button>
+</div>
